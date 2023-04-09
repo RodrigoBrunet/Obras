@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orcamentos_obras/widgets/card_home.dart';
+import 'package:orcamentos_obras/widgets/card_home_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,6 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool valueOn = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Escolha o tipo de orçamento'),
         centerTitle: true,
       ),
-      body: const CardHome(),
+      body: const CardHomeWidget(),
     );
   }
 }

@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:orcamentos_obras/widgets/switch_theme_app_widget.dart';
 
-class CardHome extends StatefulWidget {
-  const CardHome({super.key});
+class CardHomeWidget extends StatefulWidget {
+  const CardHomeWidget({super.key});
 
   @override
-  State<CardHome> createState() => _CardHomeState();
+  State<CardHomeWidget> createState() => _CardHomeStateWidget();
 }
 
-class _CardHomeState extends State<CardHome> {
+class _CardHomeStateWidget extends State<CardHomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const SwitchThemeAppWidget(),
+        const Spacer(
+          flex: 1,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -125,6 +129,9 @@ class _CardHomeState extends State<CardHome> {
               ),
             ),
           ],
+        ),
+        const Spacer(
+          flex: 1,
         ),
       ],
     );
