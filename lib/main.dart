@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orcamentos_obras/home.dart';
+import 'package:orcamentos_obras/pages/home.dart';
 
 void main() {
   runApp(const MyApp());
