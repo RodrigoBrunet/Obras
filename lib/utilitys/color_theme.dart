@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class ColorTheme {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
-      primaryColor: isDarkTheme ? Colors.black : Colors.white,
+      primaryColor:
+          isDarkTheme ? const Color.fromARGB(255, 250, 248, 248) : Colors.black,
       indicatorColor:
           isDarkTheme ? const Color(0xff0E1D36) : const Color(0xffCBDCF8),
       hintColor:
@@ -15,7 +16,9 @@ class ColorTheme {
       focusColor:
           isDarkTheme ? const Color(0xff0B2512) : const Color(0xffA8DAB5),
       disabledColor: Colors.grey,
-      cardColor: isDarkTheme ? const Color(0xFF151515) : Colors.white,
+      cardColor: isDarkTheme
+          ? const Color(0xFF151515)
+          : const Color.fromARGB(255, 238, 238, 238),
       canvasColor: isDarkTheme ? Colors.black : Colors.grey[50],
       buttonTheme: Theme.of(context).buttonTheme.copyWith(
           colorScheme: isDarkTheme
