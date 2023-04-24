@@ -41,10 +41,10 @@ class OrcamentoPageController extends ChangeNotifier {
 
   List<DropdownMenuItem<double>> get dropDownRepetitionOfFloors {
     List<DropdownMenuItem<double>> menuItens = [
-      const DropdownMenuItem(value: 1.00, child: Text("sem")),
-      const DropdownMenuItem(value: 0.75, child: Text("de 2 a 4")),
-      const DropdownMenuItem(value: 0.501, child: Text("de 5 a 8")),
-      const DropdownMenuItem(value: 0.50, child: Text("acima de 8")),
+      const DropdownMenuItem(value: 1.00, child: Text("Sem")),
+      const DropdownMenuItem(value: 0.75, child: Text("De 2 a 4")),
+      const DropdownMenuItem(value: 0.501, child: Text("De 5 a 8")),
+      const DropdownMenuItem(value: 0.50, child: Text("Acima de 8")),
     ];
     notifyListeners();
     return menuItens;
@@ -52,11 +52,11 @@ class OrcamentoPageController extends ChangeNotifier {
 
   List<DropdownMenuItem<double>> get dropDownFinishingPattern {
     List<DropdownMenuItem<double>> menuItens = [
-      const DropdownMenuItem(value: 2.00, child: Text("luxo")),
-      const DropdownMenuItem(value: 1.5, child: Text("alto")),
-      const DropdownMenuItem(value: 1.0, child: Text("normal")),
-      const DropdownMenuItem(value: 0.50, child: Text("baixo")),
-      const DropdownMenuItem(value: 0.30, child: Text("popular")),
+      const DropdownMenuItem(value: 2.00, child: Text("Luxo")),
+      const DropdownMenuItem(value: 1.5, child: Text("Alto")),
+      const DropdownMenuItem(value: 1.0, child: Text("Normal")),
+      const DropdownMenuItem(value: 0.50, child: Text("Baixo")),
+      const DropdownMenuItem(value: 0.30, child: Text("Popular")),
     ];
     notifyListeners();
     return menuItens;
@@ -64,9 +64,9 @@ class OrcamentoPageController extends ChangeNotifier {
 
   List<DropdownMenuItem<double>> get dropDownNeedsProgram {
     List<DropdownMenuItem<double>> menuItens = [
-      const DropdownMenuItem(value: 1.0, child: Text("normal")),
-      const DropdownMenuItem(value: 0.61, child: Text("simples")),
-      const DropdownMenuItem(value: 1.4, child: Text("complexo")),
+      const DropdownMenuItem(value: 1.0, child: Text("Normal")),
+      const DropdownMenuItem(value: 0.61, child: Text("Simples")),
+      const DropdownMenuItem(value: 1.4, child: Text("Complexo")),
     ];
     notifyListeners();
     return menuItens;
@@ -89,13 +89,14 @@ class OrcamentoPageController extends ChangeNotifier {
   }
 
   calcValorTotalOrcamento() {
-    double convert = double.parse(cub_referencial.text);
-    double convertArea = double.parse(area_atual.text);
+    double convertCubReferencial = double.parse(cub_referencial.text);
+    double convertAreaAtual = double.parse(area_atual.text);
     base = selectedValue *
-        (((selectedValueK1 + selectedValueK2 + selectedValuek3) / 3) * convert);
+        (((selectedValueK1 + selectedValueK2 + selectedValuek3) / 3) *
+            convertCubReferencial);
     valorBase = base! / 100;
     valorMetroString = valorBase?.toStringAsFixed(2);
-    valorTotalOrcamento = valorBase! * convertArea;
+    valorTotalOrcamento = valorBase! * convertAreaAtual;
 
     notifyListeners();
   }
