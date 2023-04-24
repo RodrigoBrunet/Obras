@@ -128,7 +128,7 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
           AnimatedBuilder(
             animation: orcamentoPageController,
             builder: (context, child) =>
-                orcamentoPageController.totalOrcamento != null
+                orcamentoPageController.valorTotalOrcamento != null
                     ? Text(
                         UtilBrasilFields.obterReal(
                             orcamentoPageController.valorTotalOrcamento!),
