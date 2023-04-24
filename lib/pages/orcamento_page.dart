@@ -1,5 +1,6 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:orcamentos_obras/controllers/orcamento_page_controller.dart';
 
 class CriarOrcamentoPage extends StatefulWidget {
@@ -40,7 +41,6 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
                   orcamentoPageController.getValueK1(valueK1);
                 });
               }),
-
           const Text('Padrão de Acabamento - K2'),
           DropdownButton(
               value: orcamentoPageController.selectedValueK2,
@@ -51,7 +51,6 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
                   orcamentoPageController.getValueK2(valuek2);
                 });
               }),
-
           const Text('Programa de Necessidades - K3'),
           DropdownButton(
               value: orcamentoPageController.selectedValuek3,
@@ -66,33 +65,81 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
           AnimatedBuilder(
             animation: orcamentoPageController,
             builder: (context, child) => Container(
-              child: orcamentoPageController.indiceConvertidoString != null
-                  ? Text(
-                      orcamentoPageController.indiceConvertidoString.toString())
+              child: orcamentoPageController.valorMetroString != null
+                  ? Text(orcamentoPageController.valorMetroString.toString())
                   : Container(),
             ),
           ),
-
-          // Container(
-          //   padding: const EdgeInsets.symmetric(horizontal: 12),
-          //   child: TextField(
-          //     controller: orcamentoController.cub_referencial,
-          //     keyboardType: TextInputType.number,
-          //     inputFormatters: [
-          //       FilteringTextInputFormatter.digitsOnly,
-          //       RealInputFormatter(moeda: true),
-          //     ],
-          //     decoration: InputDecoration(
-          //       labelText: 'C.U.B. Referencial',
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(6),
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Row(
+              children: [
+                const Text('C.U.B. Referencial'),
+                const SizedBox(
+                  width: 12,
+                ),
+                Flexible(
+                  child: TextField(
+                    controller: orcamentoPageController.cub_referencial,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      //RealInputFormatter(moeda: true),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Row(
+              children: [
+                const Text('Área Atual (m2)'),
+                const SizedBox(
+                  width: 12,
+                ),
+                Flexible(
+                  child: TextField(
+                    controller: orcamentoPageController.area_atual,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      //RealInputFormatter(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          const Text('valor total orcamento'),
+          const SizedBox(
+            height: 16,
+          ),
+          AnimatedBuilder(
+            animation: orcamentoPageController,
+            builder: (context, child) =>
+                orcamentoPageController.totalOrcamento != null
+                    ? Text(
+                        UtilBrasilFields.obterReal(
+                            orcamentoPageController.valorTotalOrcamento!),
+                        style: const TextStyle(
+                            fontSize: 32, fontWeight: FontWeight.w500),
+                      )
+                    : const Text('calculando...'),
+          ),
           TextButton(
               onPressed: () {
-                orcamentoPageController.calcIndiceCorrigido();
+                orcamentoPageController.calcValorTotalOrcamento();
               },
               child: Text('clica'))
         ],

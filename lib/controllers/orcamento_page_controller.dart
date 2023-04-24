@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 
 class OrcamentoPageController extends ChangeNotifier {
@@ -11,7 +12,12 @@ class OrcamentoPageController extends ChangeNotifier {
   var selectedValueK2 = 1.0;
   var selectedValuek3 = 1.0;
   double? indiceCorrigido;
-  String? indiceConvertidoString;
+  double? valorMetroQuadrado;
+  double? base;
+  double? valorBase;
+  double? valorTotalOrcamento;
+  String? totalOrcamento;
+  String? valorMetroString;
 
   List<DropdownMenuItem<double>> get dropDownTipicalIndicesItems {
     List<DropdownMenuItem<double>> menuItens = [
@@ -86,10 +92,15 @@ class OrcamentoPageController extends ChangeNotifier {
     selectedValuek3 = value;
   }
 
-  calcIndiceCorrigido() {
-    indiceCorrigido = selectedValue *
-        ((selectedValueK1 + selectedValueK2 + selectedValuek3) / 3);
-    indiceConvertidoString = indiceCorrigido!.toStringAsFixed(1).toString();
+  calcValorTotalOrcamento() {
+    double convert = double.parse(cub_referencial.text);
+    double convertArea = double.parse(area_atual.text);
+    base = selectedValue *
+        (((selectedValueK1 + selectedValueK2 + selectedValuek3) / 3) * convert);
+    valorBase = base! / 100;
+    valorMetroString = valorBase?.toStringAsFixed(2);
+    valorTotalOrcamento = valorBase! * convertArea;
+
     notifyListeners();
   }
 }
