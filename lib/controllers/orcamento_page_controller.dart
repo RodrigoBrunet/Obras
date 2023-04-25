@@ -13,12 +13,28 @@ class OrcamentoPageController extends ChangeNotifier {
   double? base;
   double? valorBase;
   double? valorTotalOrcamento;
-  String? valorMetroString;
+  double anteprojeto = 0;
+  double previsaoEtapasFuturas = 0;
+  double baseAnteprojeto = 0;
   bool isCheckServicoExtras = false;
+  bool isCheckPrevisaoEtapFuturas = false;
+  bool isCheckAnteprojeto = false;
+  bool isEnabledButton = false;
 
   checkCheckBox(bool? value) {
-    isCheckServicoExtras = value!;
+    if (valorBase != null) {
+      isCheckServicoExtras = value!;
+    }
 
+    notifyListeners();
+  }
+
+  validateButton() {
+    if (cub_referencial.text.isEmpty || area_atual.text.isEmpty) {
+      isEnabledButton = false;
+    } else {
+      isEnabledButton = true;
+    }
     notifyListeners();
   }
 
@@ -96,15 +112,37 @@ class OrcamentoPageController extends ChangeNotifier {
   }
 
   calcValorTotalOrcamento() {
-    double convertCubReferencial = double.parse(cub_referencial.text);
+    double convertCubReferencial = double.parse(cub_referencial.text
+        .replaceAll('.', '')
+        .trim()
+        .replaceAll('R\$', '')
+        .trim());
     double convertAreaAtual = double.parse(area_atual.text);
     base = selectedValue *
         (((selectedValueK1 + selectedValueK2 + selectedValuek3) / 3) *
             convertCubReferencial);
-    valorBase = base! / 100;
-    valorMetroString = valorBase?.toStringAsFixed(2);
-    valorTotalOrcamento = valorBase! * convertAreaAtual;
+    valorBase = (base! / 100) + baseAnteprojeto;
+    valorTotalOrcamento = (valorBase! * convertAreaAtual);
+    notifyListeners();
+  }
 
+  calValorExtrasAnteprojeto(bool value) {
+    if (value) {
+      baseAnteprojeto = (valorBase! * 0.4);
+    } else {
+      anteprojeto = 0;
+      baseAnteprojeto = 0;
+    }
+    notifyListeners();
+  }
+
+  calValorExtrasPrevisaoEtapasFuturas(bool value) {
+    if (value) {
+      previsaoEtapasFuturas =
+          (valorTotalOrcamento! * 0.2) + valorTotalOrcamento!;
+    } else {
+      previsaoEtapasFuturas = 0;
+    }
     notifyListeners();
   }
 }

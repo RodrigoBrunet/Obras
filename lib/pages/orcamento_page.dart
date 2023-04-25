@@ -12,6 +12,8 @@ class CriarOrcamentoPage extends StatefulWidget {
 
 class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
   OrcamentoPageController orcamentoPageController = OrcamentoPageController();
+  final ButtonStyle style =
+      ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade300);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,9 +151,12 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: TextField(
+                  maxLength: 9,
                   controller: orcamentoPageController.cub_referencial,
                   keyboardType: TextInputType.number,
+                  onChanged: orcamentoPageController.validateButton(),
                   decoration: InputDecoration(
+                      counterText: '',
                       hintText: '1.500.00',
                       labelText: 'C.U.B. referêncial',
                       border: OutlineInputBorder(
@@ -159,6 +164,7 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
                       )),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
+                    RealInputFormatter(),
                     //RealInputFormatter(moeda: true),
                   ],
                 ),
@@ -171,9 +177,12 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: TextField(
+                  maxLength: 8,
                   controller: orcamentoPageController.area_atual,
                   keyboardType: TextInputType.number,
+                  onChanged: orcamentoPageController.validateButton(),
                   decoration: InputDecoration(
+                      counterText: '',
                       hintText: '200',
                       labelText: 'Área Atual (m²)',
                       border: OutlineInputBorder(
@@ -181,7 +190,6 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
                       )),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
-                    //RealInputFormatter(),
                   ],
                 ),
               ),
@@ -209,7 +217,6 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
                 ),
               ],
             ),
-
             AnimatedBuilder(
               animation: orcamentoPageController,
               builder: (context, child) => orcamentoPageController
@@ -222,13 +229,26 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
                           Row(
                             children: [
                               Checkbox(
-                                value: false,
-                                onChanged: (_) {},
+                                value: orcamentoPageController
+                                    .isCheckPrevisaoEtapFuturas,
+                                onChanged: (bool? value) {
+                                  orcamentoPageController
+                                      .isCheckPrevisaoEtapFuturas = value!;
+                                  orcamentoPageController
+                                      .calValorExtrasPrevisaoEtapasFuturas(
+                                          value);
+                                },
                               ),
                               const Text('Previsão de etapas futuras'),
                               Checkbox(
-                                value: false,
-                                onChanged: (_) {},
+                                value:
+                                    orcamentoPageController.isCheckAnteprojeto,
+                                onChanged: (bool? value) {
+                                  orcamentoPageController.isCheckAnteprojeto =
+                                      value!;
+                                  orcamentoPageController
+                                      .calValorExtrasAnteprojeto(value);
+                                },
                               ),
                               const Text('Anteprojeto'),
                             ],
@@ -325,40 +345,77 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
               animation: orcamentoPageController,
               builder: (context, child) => Row(
                 children: [
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          'Valor total do orçamento',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Total do orçamento',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
                       ),
-                      orcamentoPageController.valorTotalOrcamento != null
-                          ? Container(
-                              alignment: Alignment.center,
-                              height: 45,
-                              width: MediaQuery.of(context).size.width * 0.40,
-                              color: Colors.grey.shade200,
-                              child: Text(
-                                UtilBrasilFields.obterReal(
-                                    orcamentoPageController
-                                        .valorTotalOrcamento!),
-                                style: const TextStyle(
-                                    fontSize: 28, fontWeight: FontWeight.w500),
-                              ),
-                            )
-                          : Container(
-                              alignment: Alignment.center,
-                              height: 45,
-                              width: MediaQuery.of(context).size.width * 0.40,
-                              color: Colors.grey.shade200,
-                            ),
-                    ],
+                    ),
                   ),
+                  orcamentoPageController.valorTotalOrcamento != null
+                      ? Container(
+                          alignment: Alignment.center,
+                          height: 45,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          color: Colors.grey.shade200,
+                          child: Text(
+                            UtilBrasilFields.obterReal(
+                                orcamentoPageController.valorTotalOrcamento!),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : Container(
+                          alignment: Alignment.center,
+                          height: 45,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          color: Colors.grey.shade200,
+                        ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            AnimatedBuilder(
+              animation: orcamentoPageController,
+              builder: (context, child) => Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Base',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 116,
+                  ),
+                  orcamentoPageController.valorBase != null
+                      ? Container(
+                          alignment: Alignment.center,
+                          height: 45,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          color: Colors.grey.shade200,
+                          child: Text(
+                            UtilBrasilFields.obterReal(
+                                orcamentoPageController.valorBase!),
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : Container(
+                          alignment: Alignment.center,
+                          height: 45,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          color: Colors.grey.shade200,
+                        ),
                 ],
               ),
             ),
@@ -366,42 +423,48 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
               height: 32,
             ),
             Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    orcamentoPageController.calcValorTotalOrcamento();
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 14, bottom: 14),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.84,
-                    child: const Text(
-                      'CALCULAR VALOR TOTAL',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                  )),
+              child: AnimatedBuilder(
+                animation: orcamentoPageController,
+                builder: (context, child) => orcamentoPageController
+                            .isEnabledButton ==
+                        true
+                    ? ElevatedButton(
+                        onPressed: () {
+                          orcamentoPageController.calcValorTotalOrcamento();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(top: 14, bottom: 14),
+                          height: 50,
+                          width: MediaQuery.of(context).size.width * 0.84,
+                          child: const Text(
+                            'CALCULAR VALOR TOTAL',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      )
+                    : ElevatedButton(
+                        style: style,
+                        onPressed: null,
+                        child: Container(
+                          padding: const EdgeInsets.only(top: 14, bottom: 14),
+                          height: 50,
+                          width: MediaQuery.of(context).size.width * 0.84,
+                          child: const Text(
+                            'CALCULAR VALOR TOTAL',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        )),
+              ),
             ),
             const SizedBox(
               height: 16,
             ),
-            // const Text('Base'),
-            // AnimatedBuilder(
-            //   animation: orcamentoPageController,
-            //   builder: (context, child) => Container(
-            //     child: orcamentoPageController.valorMetroString != null
-            //         ? Text(orcamentoPageController.valorMetroString.toString())
-            //         : Container(),
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 16,
-            // ),
-            // const Text('valor total orcamento'),
-            // const SizedBox(
-            //   height: 16,
-            // ),
           ],
         ),
       ),
