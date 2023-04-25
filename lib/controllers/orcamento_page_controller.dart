@@ -14,6 +14,13 @@ class OrcamentoPageController extends ChangeNotifier {
   double? valorBase;
   double? valorTotalOrcamento;
   String? valorMetroString;
+  bool isCheckServicoExtras = false;
+
+  checkCheckBox(bool? value) {
+    isCheckServicoExtras = value!;
+
+    notifyListeners();
+  }
 
   List<DropdownMenuItem<double>> get dropDownTipicalIndicesItems {
     List<DropdownMenuItem<double>> menuItens = [
