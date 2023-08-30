@@ -1,7 +1,11 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:orcamentos_obras/config/routes/routes.dart';
 import 'package:orcamentos_obras/controllers/orcamento_page_controller.dart';
+import 'package:orcamentos_obras/utils/constants/strings/string_text.dart';
+import 'package:orcamentos_obras/utils/constants/styles/text_style.dart';
 
 class CriarOrcamentoPage extends StatefulWidget {
   const CriarOrcamentoPage({super.key});
@@ -20,6 +24,10 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
       appBar: AppBar(
         title: const Text('ARQUITETÔNICO'),
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () => Modular.to.navigate(NamedRoutes.HOMEPAGE),
+          icon: const Icon(Icons.arrow_back_ios),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -29,14 +37,7 @@ class _CriarOrcamentoPageState extends State<CriarOrcamentoPage> {
               height: 16,
             ),
             const Center(
-              child: Text(
-                'Valores Típicos de Índices',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text(titleText, textAlign: TextAlign.center, style: h3),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
