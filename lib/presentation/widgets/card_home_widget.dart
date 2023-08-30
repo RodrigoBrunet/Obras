@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:orcamentos_obras/controllers/card_home_controller.dart';
 import 'package:orcamentos_obras/main.dart';
-import 'package:orcamentos_obras/routes/routes.dart';
-import 'package:orcamentos_obras/utilitys/color_theme.dart';
-import 'package:orcamentos_obras/widgets/switch_theme_app_widget.dart';
+import 'package:orcamentos_obras/config/routes/routes.dart';
+import 'package:orcamentos_obras/config/theme/color_theme.dart';
+import 'package:orcamentos_obras/presentation/widgets/switch_theme_app_widget.dart';
 
 class CardHomeWidget extends StatefulWidget {
   const CardHomeWidget({super.key});

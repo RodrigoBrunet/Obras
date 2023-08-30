@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:orcamentos_obras/routes/routes.dart';
+import 'package:orcamentos_obras/config/routes/routes.dart';
 
 class AppModule extends Module {
   Routes myRoutes = Routes();

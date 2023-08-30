@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orcamentos_obras/widgets/card_home_widget.dart';
+import 'package:orcamentos_obras/presentation/widgets/card_home_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

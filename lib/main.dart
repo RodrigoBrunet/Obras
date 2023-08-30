@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:orcamentos_obras/controllers/theme_color_controller.dart';
-import 'package:orcamentos_obras/module/appModule.dart';
-import 'package:orcamentos_obras/pages/home_page.dart';
-import 'package:orcamentos_obras/routes/routes.dart';
-import 'package:orcamentos_obras/utilitys/color_theme.dart';
+import 'package:orcamentos_obras/modules/appModule.dart';
+import 'package:orcamentos_obras/config/routes/routes.dart';
+import 'package:orcamentos_obras/config/theme/color_theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {

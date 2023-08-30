@@ -1,8 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:orcamentos_obras/pages/orcamento_page.dart';
-import 'package:orcamentos_obras/pages/home_page.dart';
+import 'package:orcamentos_obras/presentation/views/orcamento_page.dart';
+import 'package:orcamentos_obras/presentation/views/home_page.dart';
 
 class Routes {
   final List<ChildRoute> routes = [
